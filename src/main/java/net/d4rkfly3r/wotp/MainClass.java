@@ -12,6 +12,7 @@ import java.security.PrivilegedAction;
  */
 public class MainClass {
 
+    public static final boolean DEBUG = true;
     static String localhostIP;
 
     public static void main(String[] args) {
@@ -23,18 +24,6 @@ public class MainClass {
         System.out.println(localhostIP);
         AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
             new Game().start();
-//            MainClass.frame.setResizable(false);
-//            MainClass.frame.setTitle(title);
-//            MainClass.frame.add(game);
-//            MainClass.frame.pack();
-//            MainClass.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            MainClass.frame.setLocationRelativeTo(null);
-//            MainClass.frame.setVisible(true);
-//            Audio.playSound(Audio.LOADUP);
-//            Audio.playSound(Audio.SOUND_LOADUP);
-//
-//            game.start();
-
             return null; // nothing to return
         });
 

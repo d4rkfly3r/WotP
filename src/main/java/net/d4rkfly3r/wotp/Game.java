@@ -1,6 +1,6 @@
 package net.d4rkfly3r.wotp;
 
-import net.d4rkfly3r.wotp.display.Screen;
+import net.d4rkfly3r.wotp.render.Screen;
 import net.d4rkfly3r.wotp.entities.Player;
 import net.d4rkfly3r.wotp.input.Input;
 import net.d4rkfly3r.wotp.managers.*;
@@ -16,9 +16,9 @@ import java.awt.image.DataBufferInt;
  */
 public final class Game implements Runnable {
 
+    final Font verdana = new Font("Verdana", 0, 25);
     private final int width = 2000;
     private final int height = width / 3 * 2;
-
     private final Dimension frameSize;
     private final JFrame gameFrame;
     private final ResourceManager resourceManager;
@@ -62,6 +62,8 @@ public final class Game implements Runnable {
         this.playerManager = new PlayerManager(this);
         this.thisPlayer = this.playerManager.getThisPlayer();
 
+        this.graphicsManager.loadTextures();
+
         this.gameFrame.addKeyListener(input.getListenerHandler());
         this.gameFrame.addMouseListener(input.getListenerHandler());
         this.gameFrame.addMouseMotionListener(input.getListenerHandler());
@@ -80,7 +82,7 @@ public final class Game implements Runnable {
     public void run() {
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
-        final double ns = 1000000000.0 / 60.0;
+        final double ns = 1000000000.0 / 100.0; // Change second number to change the expected UPS
         double delta = 0;
         int frames = 0;
         int updates = 0;
@@ -97,7 +99,7 @@ public final class Game implements Runnable {
             render();
             frames++;
 
-            // one second || 1000 ms = 1 sec
+            // one second || 1000 ns = 1 sec
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
                 gameFrame.setTitle(title + "  | " + updates + " ups, " + frames + " fps");
@@ -124,6 +126,8 @@ public final class Game implements Runnable {
         }
         Graphics g = bs.getDrawGraphics();
 
+        screen.clear();
+
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);
         }
@@ -131,7 +135,9 @@ public final class Game implements Runnable {
         g.drawImage(image, 0, 0, width, height, null);
 
         g.setColor(Color.yellow);
-        g.drawString("Used Memory: " + (Runtime.getRuntime().totalMemory() / 1000000 - Runtime.getRuntime().freeMemory() / 1000000) + "(MB) / " + Runtime.getRuntime().totalMemory() / 1000000 + "(MB)", 200, 30);
+        g.drawRect(300, 300, 500, 500);
+        g.setFont(verdana);
+        g.drawString("Used Memory: " + (Runtime.getRuntime().totalMemory() / 1000000 - Runtime.getRuntime().freeMemory() / 1000000) + "(MB) / " + Runtime.getRuntime().totalMemory() / 1000000 + "(MB)", 20, 60);
         g.dispose();
         bs.show();
     }

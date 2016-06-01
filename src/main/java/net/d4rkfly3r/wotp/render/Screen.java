@@ -1,6 +1,7 @@
-package net.d4rkfly3r.wotp.display;
+package net.d4rkfly3r.wotp.render;
 
 import net.d4rkfly3r.wotp.Game;
+import net.d4rkfly3r.wotp.MainClass;
 
 import java.util.Random;
 
@@ -23,9 +24,16 @@ public class Screen {
     }
 
     public void clear() {
-//        for (int i = 0; i < pixels.length; i++) {
-//            pixels[i] = 0;
-//        }
+        if (MainClass.DEBUG) {
+            for (int i = 0; i < pixels.length; i++) {
+                pixels[i] = random.nextInt(0xffffff);
+            }
+
+        } else {
+            for (int i = 0; i < pixels.length; i++) {
+                pixels[i] = 0;
+            }
+        }
     }
 
     public int getPixel(int index) {
