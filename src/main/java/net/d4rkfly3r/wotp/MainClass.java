@@ -7,13 +7,10 @@ import java.net.URL;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 
-/**
- * Created by Joshua on 5/31/2016.
- */
 public class MainClass {
 
-    public static final boolean DEBUG = true;
-    static String localhostIP;
+    public static final boolean DEBUG = false;
+    private static String localhostIP;
 
     public static void main(String[] args) {
         try {

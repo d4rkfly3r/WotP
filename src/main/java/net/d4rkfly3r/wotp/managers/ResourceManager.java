@@ -2,6 +2,7 @@ package net.d4rkfly3r.wotp.managers;
 
 import net.d4rkfly3r.wotp.Game;
 import net.d4rkfly3r.wotp.interfaces.IManager;
+import net.d4rkfly3r.wotp.render.Sprite;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -9,9 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by Joshua on 5/31/2016.
- */
 public class ResourceManager implements IManager {
     private final Game game;
     private Path assetDir;
@@ -23,16 +21,15 @@ public class ResourceManager implements IManager {
         cheackAndCreateFolder(this.assetDir);
     }
 
-    private void cheackAndCreateFolder(Path folderPath) {
+    private void cheackAndCreateFolder(@Nonnull Path folderPath) {
         if (Files.notExists(folderPath)) {
             try {
                 Files.createDirectories(folderPath);
             } catch (IOException e) {
                 System.err.println("Error when trying to generate folder: " + folderPath.toString());
             }
-        } else {
-            // TODO Verify things are as they should be.
         }
+        // TODO Else Verify things are as they should be.
     }
 
     @Override
@@ -40,7 +37,8 @@ public class ResourceManager implements IManager {
 
     }
 
-    public Path getAssetDir() {
+    Path getAssetDir() {
         return assetDir;
     }
+
 }

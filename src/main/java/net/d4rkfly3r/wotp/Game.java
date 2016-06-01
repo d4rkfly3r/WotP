@@ -1,9 +1,9 @@
 package net.d4rkfly3r.wotp;
 
-import net.d4rkfly3r.wotp.render.Screen;
 import net.d4rkfly3r.wotp.entities.Player;
 import net.d4rkfly3r.wotp.input.Input;
 import net.d4rkfly3r.wotp.managers.*;
+import net.d4rkfly3r.wotp.render.Screen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +11,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-/**
- * Created by Joshua on 5/31/2016.
- */
 public final class Game implements Runnable {
 
-    final Font verdana = new Font("Verdana", 0, 25);
+    private final Font verdana = new Font("Verdana", 0, 25);
     private final int width = 2000;
     private final int height = width / 3 * 2;
     private final Dimension frameSize;
@@ -128,6 +125,9 @@ public final class Game implements Runnable {
 
         screen.clear();
 
+
+        this.graphicsManager.getSprite("grass").render(screen, 50, 50, 1, 0);
+
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);
         }
@@ -135,7 +135,6 @@ public final class Game implements Runnable {
         g.drawImage(image, 0, 0, width, height, null);
 
         g.setColor(Color.yellow);
-        g.drawRect(300, 300, 500, 500);
         g.setFont(verdana);
         g.drawString("Used Memory: " + (Runtime.getRuntime().totalMemory() / 1000000 - Runtime.getRuntime().freeMemory() / 1000000) + "(MB) / " + Runtime.getRuntime().totalMemory() / 1000000 + "(MB)", 20, 60);
         g.dispose();
