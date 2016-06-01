@@ -2,6 +2,7 @@ package net.d4rkfly3r.wotp.render;
 
 import net.d4rkfly3r.wotp.Game;
 import net.d4rkfly3r.wotp.MainClass;
+import net.d4rkfly3r.wotp.level.tile.Tile;
 
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -56,5 +57,33 @@ public class Screen {
                 pixels[xa + ya * width] = bufferedImage.getRGB(x, y);
             }
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void renderTile(int xp, int yp, Tile tile) {
+        xp -= xOffset;
+        yp -= yOffset;
+
+        tile.getSprite().render(this, xp, yp, -1, 0);
+
+//        for (int y = 0; y < tile.getSprite().getHeight(); y++) {
+//            int ya = y + yp;
+//
+//            for (int x = 0; x < tile.getSprite().getWidth(); x++) {
+//                int xa = x + xp;
+//                if (xa < -tile.getSprite().getWidth() || xa >= width || ya < 0 || ya >= height)
+//                    break;
+//                if (xa < 0)
+//                    xa = 0;
+//                pixels[xa + ya * width] = tile.getSprite().get.getPixel[x + y * tile.getSprite().getWidth()];
+//            }
+//        }
     }
 }

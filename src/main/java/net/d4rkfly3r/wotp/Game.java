@@ -26,6 +26,7 @@ public final class Game implements Runnable {
     private final PlayerManager playerManager;
     private final Input input;
     private final Player thisPlayer;
+    int x, y;
     private BufferStrategy bs;
     private String title;
     private GameState gameState;
@@ -126,7 +127,14 @@ public final class Game implements Runnable {
         screen.clear();
 
 
-        this.graphicsManager.getSprite("grass").render(screen, 50, 50, 1, 0);
+//        for (int x = 0; x < 25; x++) {
+//            for (int y = 0; y < 25; y++) {
+//                this.graphicsManager.getSprite("grass").render(screen, x * 25, y * 25, (x + y) % 2, 0);
+//            }
+//        }
+
+        levelManager.getCurrentLevel().render(x += 5, y += 5, screen);
+
 
         for (int i = 0; i < pixels.length; i++) {
             pixels[i] = screen.getPixel(i);

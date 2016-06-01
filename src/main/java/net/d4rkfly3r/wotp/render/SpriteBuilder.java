@@ -1,5 +1,7 @@
 package net.d4rkfly3r.wotp.render;
 
+import net.d4rkfly3r.wotp.managers.GraphicsManager;
+
 import javax.annotation.Nonnull;
 import java.awt.image.BufferedImage;
 
@@ -32,7 +34,7 @@ public class SpriteBuilder {
         BufferedImage[][] subs = new BufferedImage[metaCount][animCount];
         for (int i = 0; i < metaCount; i++) {
             for (int j = 0; j < animCount; j++) {
-                subs[i][j] = this.read.getSubimage(j * imageWidth, i * imageHeight, imageWidth, imageHeight);
+                subs[i][j] = GraphicsManager.resize(this.read.getSubimage(j * imageWidth, i * imageHeight, imageWidth, imageHeight), 50, 50);
             }
         }
 

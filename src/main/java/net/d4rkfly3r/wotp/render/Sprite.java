@@ -12,9 +12,10 @@ public class Sprite {
     private final int imageWidth;
     private final int imageHeight;
     private final int defaultMeta;
+    private int height;
+    private int width;
 
-    public Sprite(String uniqueName, String name, BufferedImage[][] subs, int metaCount, int animCount, int imageWidth, int imageHeight, int defaultMeta) {
-
+    Sprite(String uniqueName, String name, BufferedImage[][] subs, int metaCount, int animCount, int imageWidth, int imageHeight, int defaultMeta) {
         this.uniqueName = uniqueName;
         this.name = name;
         this.subs = subs;
@@ -44,10 +45,17 @@ public class Sprite {
         if (animCount > this.animCount) animCount = this.animCount;
 
         screen.renderImage(x, y, subs[metaCount][animCount]);
-
     }
 
     public String getUniqueName() {
         return uniqueName;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 }
