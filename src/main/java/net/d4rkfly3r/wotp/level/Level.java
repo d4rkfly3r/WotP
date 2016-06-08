@@ -22,6 +22,7 @@ public class Level {
         this.width = width;
         this.height = height;
         this.tilesInt = new int[width * height];
+        this.tiles = new int[width / 16 * height / 16];
         this.objects = new HashMap<>();
         generateLevel();
     }
@@ -33,7 +34,8 @@ public class Level {
 
     private void generateLevel() {
         for (int i = 0; i < tilesInt.length; i++) {
-            tilesInt[i] = i % 2 == 0 ? 0x00000001 : 0x00000000;
+//            tilesInt[i] = i % 2 == 0 ? 0x00000001 : 0x00000000;
+
         }
     }
 
@@ -62,6 +64,8 @@ public class Level {
         int y0 = yScroll >> 4;
         int y1 = (yScroll + screen.getHeight() + 16) >> 4;
 
+//        System.out.println(x1 + " | " + y1 + " | " + x1 * y1 + " | " + tiles.length);
+
         for (int y = y0; y < y1; y++) {
             for (int x = x0; x < x1; x++) {
                 getTile(x, y).render(x, y, screen);
@@ -75,10 +79,10 @@ public class Level {
             }
         }
 
-        objects.values().stream().flatMap(List::stream).filter(LevelObject::shouldRender).forEach(LevelObject::render);
+//        objects.values().stream().flatMap(List::stream).filter(LevelObject::shouldRender).forEach(LevelObject::render);
     }
 
-    private Tile getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
 
 
         if (x < 0 || y < 0 || x >= width || y >= height) {

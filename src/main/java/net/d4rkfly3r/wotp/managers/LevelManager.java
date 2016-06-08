@@ -6,9 +6,6 @@ import net.d4rkfly3r.wotp.level.Level;
 
 import javax.annotation.Nonnull;
 
-/**
- * Created by Joshua on 5/31/2016.
- */
 public class LevelManager implements IManager {
     private final Game game;
     private final ResourceManager resourceManager;

@@ -1,7 +1,7 @@
 package net.d4rkfly3r.wotp;
 
 import net.d4rkfly3r.wotp.entities.Player;
-import net.d4rkfly3r.wotp.input.Input;
+import net.d4rkfly3r.wotp.managers.InputManager;
 import net.d4rkfly3r.wotp.managers.*;
 import net.d4rkfly3r.wotp.render.Screen;
 
@@ -14,7 +14,7 @@ import java.awt.image.DataBufferInt;
 public final class Game implements Runnable {
 
     private final Font verdana = new Font("Verdana", 0, 25);
-    private final int width = 2000;
+    private final int width = 600;
     private final int height = width / 3 * 2;
     private final Dimension frameSize;
     private final JFrame gameFrame;
@@ -24,10 +24,8 @@ public final class Game implements Runnable {
     private final GraphicsManager graphicsManager;
     private final NetworkManager networkManager;
     private final PlayerManager playerManager;
-    private final Input input;
+    private final InputManager inputManager;
     private final Player thisPlayer;
-    int x, y;
-    private BufferStrategy bs;
     private String title;
     private GameState gameState;
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -53,7 +51,7 @@ public final class Game implements Runnable {
         // TODO Show loading screen.
         this.audioManager.playLoadingMusic();
 
-        this.input = new Input(this);
+        this.inputManager = new InputManager(this);
         this.screen = new Screen(this);
         this.levelManager = new LevelManager(this, this.resourceManager);
         this.networkManager = new NetworkManager(this);
@@ -62,12 +60,12 @@ public final class Game implements Runnable {
 
         this.graphicsManager.loadTextures();
 
-        this.gameFrame.addKeyListener(input.getListenerHandler());
-        this.gameFrame.addMouseListener(input.getListenerHandler());
-        this.gameFrame.addMouseMotionListener(input.getListenerHandler());
-        this.gameFrame.addMouseWheelListener(input.getListenerHandler());
+        this.gameFrame.addKeyListener(inputManager.getListenerHandler());
+        this.gameFrame.addMouseListener(inputManager.getListenerHandler());
+        this.gameFrame.addMouseMotionListener(inputManager.getListenerHandler());
+        this.gameFrame.addMouseWheelListener(inputManager.getListenerHandler());
 
-        this.gameFrame.addWindowFocusListener(input.getListenerHandler());
+        this.gameFrame.addWindowFocusListener(inputManager.getListenerHandler());
     }
 
     void start() {
@@ -78,6 +76,7 @@ public final class Game implements Runnable {
 
     @Override
     public void run() {
+        this.gameState = GameState.PLAYING_GAME;
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
         final double ns = 1000000000.0 / 100.0; // Change second number to change the expected UPS
@@ -85,7 +84,7 @@ public final class Game implements Runnable {
         int frames = 0;
         int updates = 0;
         gameFrame.requestFocus();
-        while (gameState == GameState.RUNNING) {
+        while (gameState == GameState.PLAYING_GAME) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
@@ -110,8 +109,9 @@ public final class Game implements Runnable {
 
     private void fireUpdate() {
         if (gameState == GameState.PLAYING_GAME) {
+            this.inputManager.fireUpdate();
             this.playerManager.fireUpdate();
-            this.input.fireUpdate();
+            this.thisPlayer.update();
             this.levelManager.fireUpdate();
         }
     }
@@ -126,14 +126,9 @@ public final class Game implements Runnable {
 
         screen.clear();
 
-
-//        for (int x = 0; x < 25; x++) {
-//            for (int y = 0; y < 25; y++) {
-//                this.graphicsManager.getSprite("grass").render(screen, x * 25, y * 25, (x + y) % 2, 0);
-//            }
-//        }
-
-        levelManager.getCurrentLevel().render(x += 5, y += 5, screen);
+        int xScroll = this.thisPlayer.getXPos() - screen.getWidth() / 2;
+        int yScroll = this.thisPlayer.getYPos() - screen.getHeight() / 2;
+        levelManager.getCurrentLevel().render(xScroll, yScroll, screen);
 
 
         for (int i = 0; i < pixels.length; i++) {
@@ -160,5 +155,37 @@ public final class Game implements Runnable {
 
     public int getHeight() {
         return height;
+    }
+
+    public ResourceManager getResourceManager() {
+        return resourceManager;
+    }
+
+    public AudioManager getAudioManager() {
+        return audioManager;
+    }
+
+    public LevelManager getLevelManager() {
+        return levelManager;
+    }
+
+    public GraphicsManager getGraphicsManager() {
+        return graphicsManager;
+    }
+
+    public NetworkManager getNetworkManager() {
+        return networkManager;
+    }
+
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
+
+    public InputManager getInputManager() {
+        return inputManager;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

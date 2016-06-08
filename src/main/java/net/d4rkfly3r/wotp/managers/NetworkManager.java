@@ -5,9 +5,6 @@ import net.d4rkfly3r.wotp.interfaces.IManager;
 
 import javax.annotation.Nonnull;
 
-/**
- * Created by Joshua on 5/31/2016.
- */
 public class NetworkManager implements IManager {
     private final Game game;
 
