@@ -24,11 +24,11 @@ public class MainClass {
     private static Texture texture;
 
     public static void main(String[] args) {
-        try {
-            localhostIP = getIP();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            localhostIP = getIP();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         System.out.println(localhostIP);
         AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
             try {
@@ -54,9 +54,9 @@ public class MainClass {
 //                    glEnd();
 //                });
 //
-                Engine.getInstance().addRender(8, () -> {
-                    RenderUtils.renderStaticSprite(texture, 1000, 1000, texture.getWidth(), texture.getHeight());
-                });
+//                Engine.getInstance().addRender(8, () -> {
+//                    RenderUtils.renderStaticSprite(texture, 1000, 1000, texture.getWidth(), texture.getHeight());
+//                });
                 RenderUtils.setClearColor(Color.BLACK);
                 Engine.getInstance().start();
 
