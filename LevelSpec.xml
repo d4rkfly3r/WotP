@@ -1,0 +1,29 @@
+<world name="TestWorld">
+    <!-- Static is relative to window, dynamic is relative to world-->
+    <static>
+        <!--<image type="web">-->
+            <!--<link>https://www.cloudflare.com/a/static/nexp=7d656f7/assets/icons-seee324dde5.png</link>-->
+            <!--<x>600</x>-->
+            <!--<y>600</y>-->
+        <!--</image>-->
+        <image type="file">
+            <link>C:\Users\Joshua\Pictures\Saved Pictures\repos.png</link>
+            <x>30</x>
+            <y>43</y>
+        </image>
+    </static>
+    <dynamic>
+        <image type="web">
+            <link>http://google.com/favicon.png</link>
+            <x>300</x>
+            <y>400</y>
+            <width>50</width>
+            <height>100</height>
+        </image>
+        <!--<image type="file">-->
+            <!--<link>images/test.png</link>-->
+            <!--<x>20</x>-->
+            <!--<y>20</y>-->
+        <!--</image>-->
+    </dynamic>
+</world>
