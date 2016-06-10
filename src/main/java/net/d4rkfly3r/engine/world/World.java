@@ -79,10 +79,28 @@ public class World {
             int width = widthL.getLength() > 0 ? Integer.parseInt(widthL.item(0).getTextContent()) : texture.getWidth();
             int height = heightL.getLength() > 0 ? Integer.parseInt(heightL.item(0).getTextContent()) : texture.getHeight();
 
-            Engine.getInstance().addRender(1, () -> {
-                RenderUtils.renderSprite(texture, x, y, width, height);
-            });
+            int repeatX = 1, repeatY = 1;
 
+            NodeList repeat = imageElem.getElementsByTagName("repeat");
+            if (repeat.getLength() > 0) {
+                final Element item = (Element) repeat.item(0);
+                final NodeList xNodeList = item.getElementsByTagName("x");
+                final NodeList yNodeList = item.getElementsByTagName("y");
+                repeatX = xNodeList.getLength() > 0 ? Integer.parseInt(xNodeList.item(0).getTextContent()) : 1;
+                repeatY = yNodeList.getLength() > 0 ? Integer.parseInt(yNodeList.item(0).getTextContent()) : 1;
+            }
+
+            final int finalRepeatX = repeatX;
+            final int finalRepeatY = repeatY;
+
+            Engine.getInstance().addRender(1, () -> {
+//                RenderUtils.renderSprite(texture, x, y, width, height);
+                for (int rX = 0; rX < finalRepeatX; rX++) {
+                    for (int rY = 0; rY < finalRepeatY; rY++) {
+                        RenderUtils.renderSprite(texture, x + width * rX, y + height * rY, width, height);
+                    }
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
